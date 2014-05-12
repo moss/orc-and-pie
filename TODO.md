@@ -1,0 +1,35 @@
+Vision
+======
+A playable roguelike version of the classic adventure
+"[The Orc and The Pie](http://www.instantdungeon.com/node/4)".
+
+Features
+========
+
+* None Yet
+
+Work In Progress
+================
+
+*Current Feature:*
+* Explore a 10x10 room.
+
+Completed Stories
+-----------------
+
+Stories In Progress
+-------------------
+
+Pending Stories
+---------------
+* Show 10x10 room.
+* Show player.
+* Walk around.
+* Can't walk through walls.
+
+Pending Features
+================
+* Interact with a Mysterious Orc
+* Risk a Horrible Death
+* Fight the Orc
+* Eat his Pie
