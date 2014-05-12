@@ -25,7 +25,10 @@ Pending Stories
 * Show 10x10 room.
 * Show player.
 * Walk around.
-* Can't walk through walls.
+* Can't walk outside open area.
+* Room has walls around it.
+* Show walls as distinctive character. (+)
+* Distinguish | walls from - walls.
 
 Pending Features
 ================
