@@ -19,10 +19,10 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* Show 10x10 room.
 
 Pending Stories
 ---------------
-* Show 10x10 room.
 * Show player.
 * Walk around.
 * Can't walk outside open area.
