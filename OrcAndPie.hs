@@ -2,14 +2,16 @@ import qualified Data.Map.Lazy as Map
 import System.Console.ANSI
 
 main = do
-    putStrLn "This is a test"
-    putStrLn "This text should be overwritten."
     let gameMap = mapWithRoom (35,7) (44,16)
     drawMap gameMap
 
 drawMap gameMap = do
     mapM_ drawTile $ viewMap gameMap
     setCursorPosition 25 0
+
+addNumbers a b = a + b
+
+addN
 
 drawTile (x,y,char) = do
     setCursorPosition y x
@@ -34,7 +36,11 @@ type Position = (Int,Int)
 data Terrain = NoTerrain | Floor
 
 mapWithRoom :: Position -> Position -> GameMap
-mapWithRoom topLeft bottomRight = Map.empty
+mapWithRoom topLeft bottomRight = Map.fromList
+  [(pos, Floor) | pos <- positionsInRange topLeft bottomRight]
+
+positionsInRange :: Position -> Position -> [Position]
+positionsInRange (left,top) (right,bottom) = [(x,y) | x <- [left..right], y <- [top..bottom]]
 
 terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain

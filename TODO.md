@@ -16,10 +16,10 @@ Work In Progress
 
 Completed Stories
 -----------------
+* Show 10x10 room.
 
 Stories In Progress
 -------------------
-* Show 10x10 room.
 
 Pending Stories
 ---------------
