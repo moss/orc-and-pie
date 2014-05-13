@@ -9,10 +9,6 @@ drawMap gameMap = do
     mapM_ drawTile $ viewMap gameMap
     setCursorPosition 25 0
 
-addNumbers a b = a + b
-
-addN
-
 drawTile (x,y,char) = do
     setCursorPosition y x
     putChar char
