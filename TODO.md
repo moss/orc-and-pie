@@ -36,3 +36,4 @@ Pending Features
 * Risk a Horrible Death
 * Fight the Orc
 * Eat his Pie
+* Enjoy endless replay value with randomly generated maps
