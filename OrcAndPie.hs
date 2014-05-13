@@ -1,9 +1,10 @@
+import qualified Data.Map.Lazy as Map
 import System.Console.ANSI
 
 main = do
     putStrLn "This is a test"
     putStrLn "This text should be overwritten."
-    let gameMap = placeRoom emptyMap (35,7) (44,16)
+    let gameMap = mapWithRoom (35,7) (44,16)
     drawMap gameMap
 
 drawMap gameMap = do
@@ -28,15 +29,12 @@ type DisplayTile = (Int,Int,Char)
 
 -- pure functions only below this point
 
-type GameMap = ()
+type GameMap = Map.Map Position Terrain
 type Position = (Int,Int)
 data Terrain = NoTerrain | Floor
 
-emptyMap :: GameMap
-emptyMap = ()
-
-placeRoom :: GameMap -> Position -> Position -> GameMap
-placeRoom map topLeft bottomRight = map
+mapWithRoom :: Position -> Position -> GameMap
+mapWithRoom topLeft bottomRight = Map.empty
 
 terrainAt :: Position -> GameMap -> Terrain
-terrainAt (x,y) gameMap = Floor
+terrainAt = Map.findWithDefault NoTerrain
