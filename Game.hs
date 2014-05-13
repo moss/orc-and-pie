@@ -2,7 +2,7 @@ module Game where
 
 import qualified Data.Map.Lazy as Map
 
-import Renderable
+import Roguelike
 
 data GameState = GameState { gsMap :: GameMap, gsPlayer :: Position }
 type GameMap = Map.Map Position Terrain
@@ -22,7 +22,7 @@ positionsInRange (left,top) (right,bottom) = [(x,y) | x <- [left..right], y <- [
 terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain
 
-instance Renderable GameState where
+instance Roguelike GameState where
     viewTile position gameState | gsPlayer gameState == position = '@'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap
 

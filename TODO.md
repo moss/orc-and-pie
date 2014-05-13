@@ -21,10 +21,10 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* Walk around.
 
 Pending Stories
 ---------------
-* Walk around.
 * Can't walk outside open area.
 * Room has walls around it.
 * Show walls as distinctive character. (+)

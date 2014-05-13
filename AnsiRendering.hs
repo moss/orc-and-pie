@@ -2,7 +2,7 @@ module AnsiRendering where
 
 import System.Console.ANSI
 
-import Renderable
+import Roguelike
 
 render gameState = do
     mapM_ drawTile $ viewTiles gameState

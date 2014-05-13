@@ -1,9 +1,9 @@
-module Renderable where
+module Roguelike where
 
-class Renderable a where
+class Roguelike a where
     viewTile :: Position -> a -> Char
     viewTiles :: a -> [DisplayTile]
-    viewTiles renderable = [(x, y, viewTile (x,y) renderable) | x <- columns, y <- rows]
+    viewTiles roguelike = [(x, y, viewTile (x,y) roguelike) | x <- columns, y <- rows]
 
 type Position = (Int,Int)
 type DisplayTile = (Int,Int,Char)
