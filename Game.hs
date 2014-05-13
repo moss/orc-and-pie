@@ -8,6 +8,8 @@ data GameState = Playing (GameMap)
 type GameMap = Map.Map Position Terrain
 data Terrain = NoTerrain | Floor
 
+newGame = Playing (mapWithRoom (35,7) (44,16))
+
 mapWithRoom :: Position -> Position -> GameMap
 mapWithRoom topLeft bottomRight = Map.fromList
   [(pos, Floor) | pos <- positionsInRange topLeft bottomRight]
