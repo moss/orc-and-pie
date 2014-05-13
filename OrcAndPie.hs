@@ -2,13 +2,13 @@ import qualified Data.Map.Lazy as Map
 import System.Console.ANSI
 
 main = do
-    let gameMap = mapWithRoom (35,7) (44,16)
-    drawMap gameMap
+    let gameState = Playing (mapWithRoom (35,7) (44,16))
+    render gameState
 
 -- Rendering
 
-drawMap gameMap = do
-    mapM_ drawTile $ viewTiles gameMap
+render gameState = do
+    mapM_ drawTile $ viewTiles gameState
     setCursorPosition 25 0
 
 drawTile (x,y,char) = do
@@ -18,18 +18,19 @@ drawTile (x,y,char) = do
 columns = [0..79]
 rows = [0..24]
 
-viewTiles :: GameMap -> [DisplayTile]
+viewTiles :: GameState -> [DisplayTile]
 viewTiles renderable = [(x, y, viewTile (x,y) renderable) | x <- columns, y <- rows]
 
-viewTile :: Position -> GameMap -> Char
-viewTile (x,y) gameMap = case terrainAt (x,y) gameMap of
-                           Floor -> '.'
-                           NoTerrain -> ' '
+viewTile :: Position -> GameState -> Char
+viewTile (x,y) (Playing gameMap) = case terrainAt (x,y) gameMap of
+                                     Floor -> '.'
+                                     NoTerrain -> ' '
 
 type DisplayTile = (Int,Int,Char)
 
 -- Game Maps
 
+data GameState = Playing (GameMap)
 type GameMap = Map.Map Position Terrain
 type Position = (Int,Int)
 data Terrain = NoTerrain | Floor
