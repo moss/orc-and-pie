@@ -20,10 +20,10 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* Show player.
 
 Pending Stories
 ---------------
-* Show player.
 * Walk around.
 * Can't walk outside open area.
 * Room has walls around it.

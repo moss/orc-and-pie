@@ -5,8 +5,10 @@ main = do
     let gameMap = mapWithRoom (35,7) (44,16)
     drawMap gameMap
 
+-- Rendering
+
 drawMap gameMap = do
-    mapM_ drawTile $ viewMap gameMap
+    mapM_ drawTile $ viewTiles gameMap
     setCursorPosition 25 0
 
 drawTile (x,y,char) = do
@@ -16,16 +18,17 @@ drawTile (x,y,char) = do
 columns = [0..79]
 rows = [0..24]
 
-viewMap :: GameMap -> [DisplayTile]
-viewMap gameMap = [(x, y, viewTile (x,y) gameMap) | x <- columns, y <- rows]
+viewTiles :: GameMap -> [DisplayTile]
+viewTiles renderable = [(x, y, viewTile (x,y) renderable) | x <- columns, y <- rows]
 
+viewTile :: Position -> GameMap -> Char
 viewTile (x,y) gameMap = case terrainAt (x,y) gameMap of
                            Floor -> '.'
                            NoTerrain -> ' '
 
 type DisplayTile = (Int,Int,Char)
 
--- pure functions only below this point
+-- Game Maps
 
 type GameMap = Map.Map Position Terrain
 type Position = (Int,Int)
