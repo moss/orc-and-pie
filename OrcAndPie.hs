@@ -18,13 +18,10 @@ drawTile (x,y,char) = do
 columns = [0..79]
 rows = [0..24]
 
-viewTiles :: GameState -> [DisplayTile]
-viewTiles renderable = [(x, y, viewTile (x,y) renderable) | x <- columns, y <- rows]
-
-viewTile :: Position -> GameState -> Char
-viewTile (x,y) (Playing gameMap) = case terrainAt (x,y) gameMap of
-                                     Floor -> '.'
-                                     NoTerrain -> ' '
+class Renderable a where
+    viewTile :: Position -> a -> Char
+    viewTiles :: a -> [DisplayTile]
+    viewTiles renderable = [(x, y, viewTile (x,y) renderable) | x <- columns, y <- rows]
 
 type DisplayTile = (Int,Int,Char)
 
@@ -44,3 +41,8 @@ positionsInRange (left,top) (right,bottom) = [(x,y) | x <- [left..right], y <- [
 
 terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain
+
+instance Renderable GameState where
+    viewTile (x,y) (Playing gameMap) = case terrainAt (x,y) gameMap of
+                                         Floor -> '.'
+                                         NoTerrain -> ' '
