@@ -22,15 +22,14 @@ Completed Stories
 * Quit the game.
 * Walk in all four cardinal directions.
 * Can't walk outside open area.
+* Show walls on left and right sides of room. (|)
 
 Stories In Progress
 -------------------
 
 Pending Stories
 ---------------
-* Room has walls around it.
-* Show walls as distinctive character. (+)
-* Distinguish | walls from - walls.
+* Show walls on top and bottom sides of room. (-)
 * Walk diagonally.
 
 Pending Features

@@ -7,7 +7,7 @@ import Roguelike
 data GameState = GameState { gsMap :: GameMap, gsPlayer :: Position }
                | QuitGame
 type GameMap = Map.Map Position Terrain
-data Terrain = NoTerrain | Floor
+data Terrain = NoTerrain | Floor | Wall
              deriving (Eq)
 
 newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
@@ -15,11 +15,14 @@ newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
                     }
 
 mapWithRoom :: Position -> Position -> GameMap
-mapWithRoom topLeft bottomRight = Map.fromList
-  [(pos, Floor) | pos <- positionsInRange topLeft bottomRight]
+mapWithRoom (left,top) (right,bottom) = Map.fromList $
+    [(pos, Floor) | pos <- positionsInRange (left,top) (right,bottom)]
+    ++ [(pos, Wall) | pos <- positionsInRange (left-1,top) (left-1,bottom)]
+    ++ [(pos, Wall) | pos <- positionsInRange (right+1,top) (right+1,bottom)]
 
 positionsInRange :: Position -> Position -> [Position]
-positionsInRange (left,top) (right,bottom) = [(x,y) | x <- [left..right], y <- [top..bottom]]
+positionsInRange (left,top) (right,bottom) =
+    [(x,y) | x <- [left..right], y <- [top..bottom]]
 
 terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain
@@ -33,6 +36,7 @@ instance Roguelike GameState where
 
 viewTerrain position gameMap = case terrainAt position gameMap of
                                  Floor -> '.'
+                                 Wall -> '|'
                                  NoTerrain -> ' '
 
 keymap = Map.fromList [ ('h', movePlayer left)
@@ -50,8 +54,8 @@ movePlayer :: Position -> GameState -> GameState
 movePlayer offset gameState@GameState { gsPlayer = playerPos, gsMap = gameMap } =
     let newPosition = offsetBy offset playerPos in
       case terrainAt newPosition gameMap of
-        NoTerrain -> gameState
-        _ -> gameState { gsPlayer = newPosition }
+        Floor -> gameState { gsPlayer = newPosition }
+        _ -> gameState
 
 offsetBy (xoffset,yoffset) (x,y) = (x+xoffset,y+yoffset)
 
