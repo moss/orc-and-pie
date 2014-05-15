@@ -24,9 +24,7 @@ terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain
 
 instance Roguelike GameState where
-    advance _ 'q' = QuitGame
-    advance gameState 'j' = gameState { gsPlayer = moveDown $ gsPlayer gameState }
-    advance gameState _ = gameState
+    advance gameState inputCharacter = getCommand inputCharacter gameState
     isOver QuitGame = True
     isOver gameState = False
     viewTile position gameState | gsPlayer gameState == position = '@'
@@ -36,5 +34,23 @@ viewTerrain position gameMap = case terrainAt position gameMap of
                                  Floor -> '.'
                                  NoTerrain -> ' '
 
-moveDown :: Position -> Position
-moveDown (x,y) = (x,y+1)
+keymap = Map.fromList [ ('h', movePlayer left)
+                      , ('j', movePlayer down)
+                      , ('k', movePlayer up)
+                      , ('l', movePlayer right)
+                      , ('q', quitGame)
+                      ]
+
+quitGame gameState = QuitGame
+doNothing gameState = gameState
+getCommand inputCharacter = Map.findWithDefault doNothing inputCharacter keymap
+
+movePlayer :: Position -> GameState -> GameState
+movePlayer offset gameState = gameState { gsPlayer = offsetBy offset (gsPlayer gameState) }
+
+offsetBy (xoffset,yoffset) (x,y) = (x+xoffset,y+yoffset)
+
+up = (0,-1)
+left = (-1,0)
+down = (0,1)
+right = (1,0)
