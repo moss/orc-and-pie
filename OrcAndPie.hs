@@ -11,3 +11,4 @@ main = do
     let gameStates = scanl advance newGame input 
     let gameUntilEnd = takeWhile notOver gameStates
     forM_ gameUntilEnd render
+    restoreSettings

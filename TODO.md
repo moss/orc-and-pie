@@ -23,10 +23,10 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* Walk in all four cardinal directions.
 
 Pending Stories
 ---------------
-* Walk in all four cardinal directions.
 * Can't walk outside open area.
 * Room has walls around it.
 * Show walls as distinctive character. (+)

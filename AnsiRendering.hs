@@ -9,7 +9,11 @@ initScreen = do
     hSetBuffering stdin NoBuffering
     hSetBuffering stdout NoBuffering
     hSetEcho stdin False
+    hideCursor
     clearScreen
+
+restoreSettings = do
+    showCursor
 
 render gameState = do
     mapM_ drawTile $ viewTiles gameState
