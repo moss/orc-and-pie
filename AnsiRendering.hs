@@ -1,8 +1,15 @@
 module AnsiRendering where
 
 import System.Console.ANSI
+import System.IO
 
 import Roguelike
+
+initScreen = do
+    hSetBuffering stdin NoBuffering
+    hSetBuffering stdout NoBuffering
+    hSetEcho stdin False
+    clearScreen
 
 render gameState = do
     mapM_ drawTile $ viewTiles gameState

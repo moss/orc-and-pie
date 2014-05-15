@@ -5,6 +5,7 @@ import qualified Data.Map.Lazy as Map
 import Roguelike
 
 data GameState = GameState { gsMap :: GameMap, gsPlayer :: Position }
+               | QuitGame
 type GameMap = Map.Map Position Terrain
 data Terrain = NoTerrain | Floor
 
@@ -23,7 +24,10 @@ terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain
 
 instance Roguelike GameState where
+    advance _ 'q' = QuitGame
     advance gameState input = gameState { gsPlayer = moveDown $ gsPlayer gameState }
+    isOver QuitGame = True
+    isOver gameState = False
     viewTile position gameState | gsPlayer gameState == position = '@'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap
 

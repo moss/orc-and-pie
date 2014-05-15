@@ -18,14 +18,14 @@ Completed Stories
 * Show 10x10 room.
 * Show player.
 * Walk in one direction for one turn.
+* Walk in one direction for multiple turns.
+* Quit the game.
 
 Stories In Progress
 -------------------
-* Walk in one direction for multiple turns.
 
 Pending Stories
 ---------------
-* Quit the game.
 * Walk in all four cardinal directions.
 * Can't walk outside open area.
 * Room has walls around it.

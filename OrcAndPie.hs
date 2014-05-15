@@ -1,10 +1,13 @@
+import Control.Monad
+
 import AnsiRendering
 import Game
 import Roguelike
-import Control.Monad
 
 main :: IO ()
 main = do
+    initScreen
     input <- getContents
     let gameStates = scanl advance newGame input 
-    forM_ gameStates render
+    let gameUntilEnd = takeWhile notOver gameStates
+    forM_ gameUntilEnd render
