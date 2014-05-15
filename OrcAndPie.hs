@@ -1,9 +1,10 @@
 import AnsiRendering
 import Game
 import Roguelike
+import Control.Monad
 
 main :: IO ()
 main = do
-    render newGame
-    input <- getChar
-    render $ advance newGame input
+    input <- getContents
+    let gameStates = scanl advance newGame input 
+    forM_ gameStates render

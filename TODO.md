@@ -21,10 +21,11 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* Walk in one direction for multiple turns.
 
 Pending Stories
 ---------------
-* Walk in one direction for multiple turns.
+* Quit the game.
 * Walk in all four cardinal directions.
 * Can't walk outside open area.
 * Room has walls around it.
