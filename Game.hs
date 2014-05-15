@@ -8,6 +8,7 @@ data GameState = GameState { gsMap :: GameMap, gsPlayer :: Position }
                | QuitGame
 type GameMap = Map.Map Position Terrain
 data Terrain = NoTerrain | Floor
+             deriving (Eq)
 
 newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
                     , gsPlayer = (40, 11)
@@ -46,7 +47,11 @@ doNothing gameState = gameState
 getCommand inputCharacter = Map.findWithDefault doNothing inputCharacter keymap
 
 movePlayer :: Position -> GameState -> GameState
-movePlayer offset gameState = gameState { gsPlayer = offsetBy offset (gsPlayer gameState) }
+movePlayer offset gameState@GameState { gsPlayer = playerPos, gsMap = gameMap } =
+    let newPosition = offsetBy offset playerPos in
+      case terrainAt newPosition gameMap of
+        NoTerrain -> gameState
+        _ -> gameState { gsPlayer = newPosition }
 
 offsetBy (xoffset,yoffset) (x,y) = (x+xoffset,y+yoffset)
 

@@ -20,14 +20,14 @@ Completed Stories
 * Walk in one direction for one turn.
 * Walk in one direction for multiple turns.
 * Quit the game.
+* Walk in all four cardinal directions.
+* Can't walk outside open area.
 
 Stories In Progress
 -------------------
-* Walk in all four cardinal directions.
 
 Pending Stories
 ---------------
-* Can't walk outside open area.
 * Room has walls around it.
 * Show walls as distinctive character. (+)
 * Distinguish | walls from - walls.
