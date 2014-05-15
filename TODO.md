@@ -23,13 +23,13 @@ Completed Stories
 * Walk in all four cardinal directions.
 * Can't walk outside open area.
 * Show walls on left and right sides of room. (|)
+* Show walls on top and bottom sides of room. (-)
 
 Stories In Progress
 -------------------
 
 Pending Stories
 ---------------
-* Show walls on top and bottom sides of room. (-)
 * Walk diagonally.
 
 Pending Features

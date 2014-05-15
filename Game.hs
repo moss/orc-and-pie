@@ -19,6 +19,8 @@ mapWithRoom (left,top) (right,bottom) = Map.fromList $
     [(pos, Floor) | pos <- positionsInRange (left,top) (right,bottom)]
     ++ [(pos, Wall) | pos <- positionsInRange (left-1,top) (left-1,bottom)]
     ++ [(pos, Wall) | pos <- positionsInRange (right+1,top) (right+1,bottom)]
+    ++ [(pos, Wall) | pos <- positionsInRange (left-1,top-1) (right+1,top-1)]
+    ++ [(pos, Wall) | pos <- positionsInRange (left-1,bottom+1) (right+1,bottom+1)]
 
 positionsInRange :: Position -> Position -> [Position]
 positionsInRange (left,top) (right,bottom) =
@@ -36,8 +38,27 @@ instance Roguelike GameState where
 
 viewTerrain position gameMap = case terrainAt position gameMap of
                                  Floor -> '.'
-                                 Wall -> '|'
+                                 Wall -> viewWall (position,gameMap)
                                  NoTerrain -> ' '
+
+viewWall mapPosition = if isCornerWall mapPosition
+                              then '+'
+                              else if isVerticalWall mapPosition
+                                then '|'
+                                else '-'
+
+isCornerWall mapPosition = isVerticalWall mapPosition
+                        && isHorizontalWall mapPosition
+
+isVerticalWall mapPosition = wallInDirection up mapPosition
+                          || wallInDirection down mapPosition
+
+isHorizontalWall mapPosition = wallInDirection left mapPosition
+                            || wallInDirection right mapPosition
+
+wallInDirection offset (position,gameMap) =
+    let testPosition = offsetBy offset position in
+      terrainAt testPosition gameMap == Wall
 
 keymap = Map.fromList [ ('h', movePlayer left)
                       , ('j', movePlayer down)
