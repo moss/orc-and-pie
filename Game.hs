@@ -24,7 +24,6 @@ terrainAt = Map.findWithDefault NoTerrain
 
 instance Roguelike GameState where
     advance gameState input = gameState
-    isOver gameState = False
     viewTile position gameState | gsPlayer gameState == position = '@'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap
 

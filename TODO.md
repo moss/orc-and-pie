@@ -11,8 +11,7 @@ Features
 Work In Progress
 ================
 
-*Current Feature:*
-* Explore a 10x10 room.
+*Current Feature:* Explore a 10x10 room.
 
 Completed Stories
 -----------------
@@ -21,14 +20,17 @@ Completed Stories
 
 Stories In Progress
 -------------------
-* Walk around.
+* Walk in one direction for one turn.
 
 Pending Stories
 ---------------
+* Walk in one direction for multiple turns.
+* Walk in all four cardinal directions.
 * Can't walk outside open area.
 * Room has walls around it.
 * Show walls as distinctive character. (+)
 * Distinguish | walls from - walls.
+* Walk diagonally.
 
 Pending Features
 ================

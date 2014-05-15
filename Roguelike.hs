@@ -2,7 +2,6 @@ module Roguelike where
 
 class Roguelike gameState where
     advance :: gameState -> Char -> gameState
-    isOver :: gameState -> Bool
     viewTile :: Position -> gameState -> Char
     viewTiles :: gameState -> [DisplayTile]
     viewTiles roguelike = [(x, y, viewTile (x,y) roguelike) | x <- columns, y <- rows]
