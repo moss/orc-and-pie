@@ -23,10 +23,13 @@ terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain
 
 instance Roguelike GameState where
-    advance gameState input = gameState
+    advance gameState input = gameState { gsPlayer = moveDown $ gsPlayer gameState }
     viewTile position gameState | gsPlayer gameState == position = '@'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap
 
 viewTerrain position gameMap = case terrainAt position gameMap of
                                  Floor -> '.'
                                  NoTerrain -> ' '
+
+moveDown :: Position -> Position
+moveDown (x,y) = (x,y+1)

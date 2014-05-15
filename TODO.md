@@ -17,10 +17,10 @@ Completed Stories
 -----------------
 * Show 10x10 room.
 * Show player.
+* Walk in one direction for one turn.
 
 Stories In Progress
 -------------------
-* Walk in one direction for one turn.
 
 Pending Stories
 ---------------
