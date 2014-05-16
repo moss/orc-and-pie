@@ -84,18 +84,21 @@ getCommand inputCharacter = Map.findWithDefault doNothing inputCharacter keymap
 
 advanceOrc gameState = moveOrc right gameState
 
+setPlayer gameState player = gameState { gsPlayer = player }
+setOrc gameState orc = gameState { gsOrc = orc }
+
 moveOrc :: Position -> GameState -> GameState
-moveOrc offset gameState@GameState { gsOrc = orcPos, gsMap = gameMap } =
-    let newPosition = offsetBy offset orcPos in
-      case terrainAt newPosition gameMap of
-        Floor -> gameState { gsOrc = newPosition }
+moveOrc offset gameState =
+    let newPosition = offsetBy offset (gsOrc gameState) in
+      case terrainAt newPosition (gsMap gameState) of
+        Floor -> setOrc gameState newPosition
         _ -> gameState
 
 movePlayer :: Position -> GameState -> GameState
-movePlayer offset gameState@GameState { gsPlayer = playerPos, gsMap = gameMap } =
-    let newPosition = offsetBy offset playerPos in
-      case terrainAt newPosition gameMap of
-        Floor -> gameState { gsPlayer = newPosition }
+movePlayer offset gameState =
+    let newPosition = offsetBy offset (gsPlayer gameState) in
+      case terrainAt newPosition (gsMap gameState) of
+        Floor -> setPlayer gameState newPosition
         _ -> gameState
 
 offsetBy (xoffset,yoffset) (x,y) = (x+xoffset,y+yoffset)
