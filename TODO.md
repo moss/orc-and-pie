@@ -24,13 +24,13 @@ Completed Stories
 * Can't walk outside open area.
 * Show walls on left and right sides of room. (|)
 * Show walls on top and bottom sides of room. (-)
+* Walk diagonally.
 
 Stories In Progress
 -------------------
 
 Pending Stories
 ---------------
-* Walk diagonally.
 
 Pending Features
 ================

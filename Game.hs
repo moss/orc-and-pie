@@ -64,6 +64,10 @@ keymap = Map.fromList [ ('h', movePlayer left)
                       , ('j', movePlayer down)
                       , ('k', movePlayer up)
                       , ('l', movePlayer right)
+                      , ('y', movePlayer $ up `offsetBy` left)
+                      , ('u', movePlayer $ up `offsetBy` right)
+                      , ('b', movePlayer $ down `offsetBy` left)
+                      , ('n', movePlayer $ down `offsetBy` right)
                       , ('q', quitGame)
                       ]
 
