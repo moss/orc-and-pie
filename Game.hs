@@ -95,7 +95,9 @@ moveOrc offset gameState =
         _ -> gameState
 
 movePlayer :: Position -> GameState -> GameState
-movePlayer offset gameState =
+movePlayer = moveCharacter gsPlayer setPlayer
+
+moveCharacter positionGetter positionSetter offset gameState =
     let newPosition = offsetBy offset (gsPlayer gameState) in
       case terrainAt newPosition (gsMap gameState) of
         Floor -> setPlayer gameState newPosition
