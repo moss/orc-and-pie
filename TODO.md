@@ -19,13 +19,13 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* The orc moves one step right each turn.
+* The orc cannot walk through walls.
 
 Pending Stories
 ---------------
-* The orc moves one step right each turn.
 * The orc follows a preset movement pattern.
 * The orc moves randomly.
-* The orc cannot walk through walls.
 * The orc cannot walk into the player.
 * The player cannot walk into the orc.
 * The orc moves generally towards the player.

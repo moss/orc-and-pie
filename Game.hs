@@ -34,7 +34,9 @@ terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain
 
 instance Roguelike GameState where
-    advance gameState inputCharacter = getCommand inputCharacter gameState
+    advance gameState inputCharacter = let advancePlayer = getCommand inputCharacter
+                                           in (advancePlayer . advanceOrc) gameState
+
     isOver QuitGame = True
     isOver gameState = False
     viewTile position gameState | gsPlayer gameState == position = '@'
@@ -79,6 +81,15 @@ keymap = Map.fromList [ ('h', movePlayer left)
 quitGame gameState = QuitGame
 doNothing gameState = gameState
 getCommand inputCharacter = Map.findWithDefault doNothing inputCharacter keymap
+
+advanceOrc gameState = moveOrc right gameState
+
+moveOrc :: Position -> GameState -> GameState
+moveOrc offset gameState@GameState { gsOrc = orcPos, gsMap = gameMap } =
+    let newPosition = offsetBy offset orcPos in
+      case terrainAt newPosition gameMap of
+        Floor -> gameState { gsOrc = newPosition }
+        _ -> gameState
 
 movePlayer :: Position -> GameState -> GameState
 movePlayer offset gameState@GameState { gsPlayer = playerPos, gsMap = gameMap } =
