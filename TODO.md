@@ -6,35 +6,33 @@ A playable roguelike version of the classic adventure
 Features
 ========
 
-* None Yet
+* Explore a 10x10 room.
 
 Work In Progress
 ================
 
-*Current Feature:* Explore a 10x10 room.
+*Current Feature:* Interact with a Mysterious Orc
 
 Completed Stories
 -----------------
-* Show 10x10 room.
-* Show player.
-* Walk in one direction for one turn.
-* Walk in one direction for multiple turns.
-* Quit the game.
-* Walk in all four cardinal directions.
-* Can't walk outside open area.
-* Show walls on left and right sides of room. (|)
-* Show walls on top and bottom sides of room. (-)
-* Walk diagonally.
 
 Stories In Progress
 -------------------
 
 Pending Stories
 ---------------
+* Show the orc.
+* The orc moves one step right each turn.
+* The orc follows a preset movement pattern.
+* The orc moves randomly.
+* The orc cannot walk through walls.
+* The orc cannot walk into the player.
+* The player cannot walk into the orc.
+* The orc moves generally towards the player.
+* The game announces the presence of the orc.
 
 Pending Features
 ================
-* Interact with a Mysterious Orc
 * Risk a Horrible Death
 * Fight the Orc
 * Eat his Pie
