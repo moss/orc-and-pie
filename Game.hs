@@ -87,14 +87,7 @@ advanceOrc gameState = moveOrc right gameState
 setPlayer gameState player = gameState { gsPlayer = player }
 setOrc gameState orc = gameState { gsOrc = orc }
 
-moveOrc :: Position -> GameMove
-moveOrc offset gameState =
-    let newPosition = offsetBy offset (gsOrc gameState) in
-      case terrainAt newPosition (gsMap gameState) of
-        Floor -> setOrc gameState newPosition
-        _ -> gameState
-
-movePlayer :: Position -> GameMove
+moveOrc = moveCharacter gsOrc setOrc
 movePlayer = moveCharacter gsPlayer setPlayer
 
 type PositionGetter = GameState -> Position
@@ -103,9 +96,9 @@ type GameMove = GameState -> GameState
 
 moveCharacter :: PositionGetter -> PositionSetter -> Position -> GameMove
 moveCharacter positionGetter positionSetter offset gameState =
-    let newPosition = offsetBy offset (gsPlayer gameState) in
+    let newPosition = offsetBy offset (positionGetter gameState) in
       case terrainAt newPosition (gsMap gameState) of
-        Floor -> setPlayer gameState newPosition
+        Floor -> positionSetter gameState newPosition
         _ -> gameState
 
 offsetBy (xoffset,yoffset) (x,y) = (x+xoffset,y+yoffset)
