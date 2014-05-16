@@ -15,13 +15,13 @@ Work In Progress
 
 Completed Stories
 -----------------
+* Show the orc.
 
 Stories In Progress
 -------------------
 
 Pending Stories
 ---------------
-* Show the orc.
 * The orc moves one step right each turn.
 * The orc follows a preset movement pattern.
 * The orc moves randomly.

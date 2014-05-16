@@ -4,14 +4,18 @@ import qualified Data.Map.Lazy as Map
 
 import Roguelike
 
-data GameState = GameState { gsMap :: GameMap, gsPlayer :: Position }
+data GameState = GameState { gsMap :: GameMap
+                           , gsPlayer :: Position
+                           , gsOrc :: Position
+                           }
                | QuitGame
 type GameMap = Map.Map Position Terrain
 data Terrain = NoTerrain | Floor | Wall
              deriving (Eq)
 
 newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
-                    , gsPlayer = (40, 11)
+                    , gsPlayer = (42, 9)
+                    , gsOrc = (37, 14)
                     }
 
 mapWithRoom :: Position -> Position -> GameMap
@@ -34,6 +38,7 @@ instance Roguelike GameState where
     isOver QuitGame = True
     isOver gameState = False
     viewTile position gameState | gsPlayer gameState == position = '@'
+    viewTile position gameState | gsOrc gameState == position = 'o'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap
 
 viewTerrain position gameMap = case terrainAt position gameMap of
