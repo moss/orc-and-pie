@@ -4,6 +4,7 @@ import qualified Data.Map.Lazy as Map
 
 import GameMap
 import Roguelike
+import TerrainView
 
 data GameState = GameState { gsMap :: GameMap
                            , gsPlayer :: Position
@@ -25,30 +26,6 @@ instance Roguelike GameState where
     viewTile position gameState | gsPlayer gameState == position = '@'
     viewTile position gameState | gsOrc gameState == position = 'o'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap
-
-viewTerrain position gameMap = case terrainAt position gameMap of
-                                 Floor -> '.'
-                                 Wall -> viewWall (position,gameMap)
-                                 NoTerrain -> ' '
-
-viewWall mapPosition = if isCornerWall mapPosition
-                              then '+'
-                              else if isVerticalWall mapPosition
-                                then '|'
-                                else '-'
-
-isCornerWall mapPosition = isVerticalWall mapPosition
-                        && isHorizontalWall mapPosition
-
-isVerticalWall mapPosition = wallInDirection up mapPosition
-                          || wallInDirection down mapPosition
-
-isHorizontalWall mapPosition = wallInDirection left mapPosition
-                            || wallInDirection right mapPosition
-
-wallInDirection offset (position,gameMap) =
-    let testPosition = offsetBy offset position in
-      terrainAt testPosition gameMap == Wall
 
 keymap = Map.fromList [ ('h', movePlayer left)
                       , ('j', movePlayer down)
@@ -83,10 +60,3 @@ moveCharacter positionGetter positionSetter offset gameState =
       case terrainAt newPosition (gsMap gameState) of
         Floor -> positionSetter gameState newPosition
         _ -> gameState
-
-offsetBy (xoffset,yoffset) (x,y) = (x+xoffset,y+yoffset)
-
-up = (0,-1)
-left = (-1,0)
-down = (0,1)
-right = (1,0)
