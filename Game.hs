@@ -9,12 +9,18 @@ import TerrainView
 data GameState = GameState { gsMap :: GameMap
                            , gsPlayer :: Position
                            , gsOrc :: Position
+                           , gsOrcMoves :: [Position]
                            }
                | QuitGame
 
 newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
                     , gsPlayer = (42, 9)
                     , gsOrc = (37, 14)
+                    , gsOrcMoves = cycle [ right, right, right, right
+                                         , down, down
+                                         , left, left, left, left
+                                         , up, up
+                                         ]
                     }
 
 instance Roguelike GameState where
@@ -42,7 +48,8 @@ quitGame gameState = QuitGame
 doNothing gameState = gameState
 getCommand inputCharacter = Map.findWithDefault doNothing inputCharacter keymap
 
-advanceOrc gameState = moveOrc right gameState
+advanceOrc gameState@GameState { gsOrcMoves = firstMove:restMoves } =
+    moveOrc firstMove gameState { gsOrcMoves = restMoves }
 
 setPlayer gameState player = gameState { gsPlayer = player }
 setOrc gameState orc = gameState { gsOrc = orc }

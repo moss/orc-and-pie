@@ -21,10 +21,10 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* The orc follows a preset movement pattern.
 
 Pending Stories
 ---------------
-* The orc follows a preset movement pattern.
 * The orc moves randomly.
 * The orc cannot walk into the player.
 * The player cannot walk into the orc.
