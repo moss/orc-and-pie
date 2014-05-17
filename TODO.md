@@ -16,11 +16,11 @@ Work In Progress
 Completed Stories
 -----------------
 * Show the orc.
+* The orc moves one step right each turn.
+* The orc cannot walk through walls.
 
 Stories In Progress
 -------------------
-* The orc moves one step right each turn.
-* The orc cannot walk through walls.
 
 Pending Stories
 ---------------
