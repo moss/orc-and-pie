@@ -1,7 +1,7 @@
 module Roguelike where
 
 class Roguelike gameState where
-    advance :: gameState -> Char -> gameState
+    advance :: Char -> gameState -> gameState
     isOver :: gameState -> Bool
     notOver :: gameState -> Bool
     notOver = not . isOver

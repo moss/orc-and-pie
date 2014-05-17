@@ -24,7 +24,7 @@ newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
                     }
 
 instance Roguelike GameState where
-    advance gameState inputCharacter = let advancePlayer = getCommand inputCharacter
+    advance inputCharacter gameState = let advancePlayer = getCommand inputCharacter
                                            in (advancePlayer . advanceOrc) gameState
 
     isOver QuitGame = True
