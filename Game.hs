@@ -40,6 +40,7 @@ instance Roguelike GameState where
     viewTile position gameState | gsPlayer gameState == position = '@'
     viewTile position gameState | gsOrc gameState == position = 'o'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap
+    viewTiles gameState = [(x, y, viewTile (x,y) gameState) | (x,y) <- Map.keys $ gsMap gameState]
 
 keymap = Map.fromList [ ('h', movePlayer left)
                       , ('j', movePlayer down)

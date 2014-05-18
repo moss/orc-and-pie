@@ -20,13 +20,13 @@ Completed Stories
 * The orc cannot walk through walls.
 * The orc follows a preset movement pattern.
 * The orc moves randomly.
+* Fix growing performance problem.
 
 Stories In Progress
 -------------------
 
 Pending Stories
 ---------------
-* Fix growing performance problem.
 * The orc cannot walk into the player.
 * The player cannot walk into the orc.
 * The orc moves generally towards the player.
