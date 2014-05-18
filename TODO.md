@@ -22,10 +22,10 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* The orc moves randomly.
 
 Pending Stories
 ---------------
-* The orc moves randomly.
 * The orc cannot walk into the player.
 * The player cannot walk into the orc.
 * The orc moves generally towards the player.

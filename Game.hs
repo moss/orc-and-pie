@@ -1,5 +1,6 @@
 module Game where
 
+import Data.List
 import qualified Data.Map.Lazy as Map
 
 import GameMap
@@ -9,24 +10,27 @@ import TerrainView
 data GameState = GameState { gsMap :: GameMap
                            , gsPlayer :: Position
                            , gsOrc :: Position
-                           , gsOrcMoves :: [Position]
                            }
                | QuitGame
 
 newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
                     , gsPlayer = (42, 9)
                     , gsOrc = (37, 14)
-                    , gsOrcMoves = cycle [ right, right, right, right
-                                         , down, down
-                                         , left, left, left, left
-                                         , up, up
-                                         ]
                     }
 
-gameMoves :: [Char] -> [GameMove]
-gameMoves input = map advance input
+orcInput = cycle [ right, right, right, right
+                 , down, down
+                 , left, left, left, left
+                 , up, up
+                 ]
 
-advance inputCharacter = (getCommand inputCharacter) . advanceOrc
+gameMoves :: [Char] -> [GameMove]
+gameMoves input = let playerMoves = map advancePlayer input
+                      orcMoves = map advanceOrc orcInput
+                      in (concat.transpose) [playerMoves, orcMoves]
+
+advancePlayer inputCharacter = getCommand inputCharacter
+advanceOrc direction = moveOrc direction
 
 instance Roguelike GameState where
     isOver QuitGame = True
@@ -49,9 +53,6 @@ keymap = Map.fromList [ ('h', movePlayer left)
 quitGame gameState = QuitGame
 doNothing gameState = gameState
 getCommand inputCharacter = Map.findWithDefault doNothing inputCharacter keymap
-
-advanceOrc gameState@GameState { gsOrcMoves = firstMove:restMoves } =
-    moveOrc firstMove gameState { gsOrcMoves = restMoves }
 
 setPlayer gameState player = gameState { gsPlayer = player }
 setOrc gameState orc = gameState { gsOrc = orc }
