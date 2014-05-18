@@ -1,7 +1,9 @@
 module Game where
 
 import Data.List
+import qualified Data.Vector as Vector
 import qualified Data.Map.Lazy as Map
+import System.Random
 
 import GameMap
 import Roguelike
@@ -18,16 +20,16 @@ newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
                     , gsOrc = (37, 14)
                     }
 
-orcInput = cycle [ right, right, right, right
-                 , down, down
-                 , left, left, left, left
-                 , up, up
-                 ]
+gameMoves :: RandomGen a => [Char] -> a -> [GameMove]
+gameMoves input orcBrain = let playerMoves = map advancePlayer input
+                               orcMoves = map advanceOrc $ genOrcMoves orcBrain
+                               in (concat.transpose) [playerMoves, orcMoves]
 
-gameMoves :: [Char] -> [GameMove]
-gameMoves input = let playerMoves = map advancePlayer input
-                      orcMoves = map advanceOrc orcInput
-                      in (concat.transpose) [playerMoves, orcMoves]
+genOrcMoves :: RandomGen a => a -> [Position]
+genOrcMoves = randomChoices $ Vector.fromList [up, down, left, right]
+
+randomChoices :: RandomGen a => Vector.Vector b -> a -> [b]
+randomChoices options gen = map (Vector.unsafeIndex options) (randomRs (0,3) gen)
 
 advancePlayer inputCharacter = getCommand inputCharacter
 advanceOrc direction = moveOrc direction

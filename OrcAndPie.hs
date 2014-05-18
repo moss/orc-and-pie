@@ -1,4 +1,5 @@
 import Control.Monad
+import System.Random
 
 import AnsiRendering
 import Game
@@ -8,6 +9,7 @@ main :: IO ()
 main = do
     initScreen
     input <- getContents
-    let gameStates = play newGame $ gameMoves input
+    orcBrain <- getStdGen
+    let gameStates = play newGame $ gameMoves input orcBrain
     forM_ gameStates render
     restoreSettings
