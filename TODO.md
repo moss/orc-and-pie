@@ -18,10 +18,10 @@ Completed Stories
 * Show the orc.
 * The orc moves one step right each turn.
 * The orc cannot walk through walls.
+* The orc follows a preset movement pattern.
 
 Stories In Progress
 -------------------
-* The orc follows a preset movement pattern.
 
 Pending Stories
 ---------------

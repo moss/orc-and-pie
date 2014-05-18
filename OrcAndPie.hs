@@ -8,7 +8,6 @@ main :: IO ()
 main = do
     initScreen
     input <- getContents
-    let gameStates = scanl (flip advance) newGame input
-    let gameUntilEnd = takeWhile notOver gameStates
-    forM_ gameUntilEnd render
+    let gameStates = play newGame $ gameMoves input
+    forM_ gameStates render
     restoreSettings

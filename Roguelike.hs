@@ -1,13 +1,20 @@
 module Roguelike where
 
 class Roguelike gameState where
-    advance :: Char -> gameState -> gameState
     isOver :: gameState -> Bool
     notOver :: gameState -> Bool
     notOver = not . isOver
     viewTile :: Position -> gameState -> Char
     viewTiles :: gameState -> [DisplayTile]
     viewTiles roguelike = [(x, y, viewTile (x,y) roguelike) | x <- columns, y <- rows]
+
+play :: Roguelike a => a -> [(a -> a)] -> [a]
+play startingState moves = takeWhile notOver $ animate startingState moves
+
+animate :: a -> [(a -> a)] -> [a]
+animate state moves = state : (case moves of
+                            [] -> []
+                            m:ms -> animate (m state) ms)
 
 type Position = (Int,Int)
 type Offset = Position
