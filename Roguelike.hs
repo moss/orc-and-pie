@@ -4,6 +4,7 @@ class Roguelike gameState where
     isOver :: gameState -> Bool
     notOver :: gameState -> Bool
     notOver = not . isOver
+    viewMessage :: gameState -> String
     viewTile :: Position -> gameState -> Char
     viewTiles :: gameState -> [DisplayTile]
     viewTiles roguelike = [(x, y, viewTile (x,y) roguelike) | x <- columns, y <- rows]

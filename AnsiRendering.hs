@@ -16,6 +16,9 @@ restoreSettings = do
     showCursor
 
 render gameState = do
+    setCursorPosition 0 0
+    clearLine
+    putStr $ viewMessage gameState
     mapM_ drawTile $ viewTiles gameState
     setCursorPosition 25 0
 

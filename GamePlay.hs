@@ -13,17 +13,40 @@ type GameMove = GameState -> GameState
 
 gameMoves :: RandomGen a => [Char] -> a -> [GameMove]
 gameMoves input orcBrain = let playerMoves = map advancePlayer input
-                               orcMoves = map advanceOrc $ genOrcMoves orcBrain
+                               orcMoves = genOrcMoves orcBrain
                                in (concat.transpose) [playerMoves, orcMoves]
 
-genOrcMoves :: RandomGen a => a -> [Position]
-genOrcMoves = randomChoices $ Vector.fromList [up, down, left, right]
+genOrcMoves :: RandomGen a => a -> [GameMove]
+genOrcMoves = randomChoices $ Vector.fromList [ advanceOrc up
+                                              , advanceOrc down
+                                              , advanceOrc left
+                                              , advanceOrc right
+                                              , advanceOrcTowardsPlayer
+                                              , advanceOrcTowardsPlayer
+                                              ]
 
 randomChoices :: RandomGen a => Vector.Vector b -> a -> [b]
-randomChoices options gen = map (Vector.unsafeIndex options) (randomRs (0,3) gen)
+randomChoices options gen = map (Vector.unsafeIndex options) (randomRs (0,lastIndex) gen)
+                            where lastIndex = (Vector.length options) - 1
 
 advancePlayer inputCharacter = getCommand inputCharacter
 advanceOrc direction = moveOrc direction
+
+advanceOrcTowardsPlayer gameState = advanceOrc (orcToPlayerDir gameState) gameState
+
+-- | Find the direction from the orc to the player
+-- >>> orcToPlayerDir newGame { gsOrc=(1,1), gsPlayer=(10,10) }
+-- (1,1)
+-- >>> orcToPlayerDir newGame { gsOrc=(10,10), gsPlayer=(1,1) }
+-- (-1,-1)
+-- >>> orcToPlayerDir newGame { gsOrc=(10,10), gsPlayer=(10,1) }
+-- (0,-1)
+orcToPlayerDir GameState { gsOrc=(orcx,orcy), gsPlayer=(playerx,playery) } =
+    (dampen (playerx-orcx), dampen (playery-orcy))
+
+dampen num | num < 0 = -1
+           | num > 0 = 1
+           | num == 0 = 0
 
 keymap = Map.fromList [ ('h', movePlayer left)
                       , ('j', movePlayer down)

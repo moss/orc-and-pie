@@ -23,14 +23,14 @@ Completed Stories
 * Fix growing performance problem.
 * The orc cannot walk into the player.
 * The player cannot walk into the orc.
+* The orc moves generally towards the player.
+* The game announces the presence of the orc.
 
 Stories In Progress
 -------------------
 
 Pending Stories
 ---------------
-* The orc moves generally towards the player.
-* The game announces the presence of the orc.
 
 Pending Features
 ================
