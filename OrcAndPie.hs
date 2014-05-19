@@ -2,7 +2,8 @@ import Control.Monad
 import System.Random
 
 import AnsiRendering
-import Game
+import GamePlay
+import GameState
 import Roguelike
 
 main :: IO ()

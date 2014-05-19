@@ -1,4 +1,4 @@
-module GameMap ( GameMap, Terrain(NoTerrain,Floor,Wall), mapWithRoom, terrainAt ) where
+module GameMap ( GameMap, Terrain(NoTerrain,Floor,Wall), mapWithRoom, terrainAt, positionsOnMap ) where
 
 import qualified Data.Map.Lazy as Map
 
@@ -22,3 +22,5 @@ positionsInRange (left,top) (right,bottom) =
 
 terrainAt :: Position -> GameMap -> Terrain
 terrainAt = Map.findWithDefault NoTerrain
+
+positionsOnMap = Map.keys
