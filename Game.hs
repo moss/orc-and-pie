@@ -70,6 +70,10 @@ type GameMove = GameState -> GameState
 moveCharacter :: PositionGetter -> PositionSetter -> Position -> GameMove
 moveCharacter positionGetter positionSetter offset gameState =
     let newPosition = offsetBy offset (positionGetter gameState) in
-      case terrainAt newPosition (gsMap gameState) of
-        Floor -> positionSetter gameState newPosition
-        _ -> gameState
+      if walkableTerrain newPosition (gsMap gameState)
+        && unoccupied newPosition gameState
+      then positionSetter gameState newPosition
+      else gameState
+
+walkableTerrain position gameMap = terrainAt position gameMap == Floor
+unoccupied position gameState = (gsOrc gameState) /= position && (gsPlayer gameState) /= position

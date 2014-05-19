@@ -21,14 +21,14 @@ Completed Stories
 * The orc follows a preset movement pattern.
 * The orc moves randomly.
 * Fix growing performance problem.
+* The orc cannot walk into the player.
+* The player cannot walk into the orc.
 
 Stories In Progress
 -------------------
 
 Pending Stories
 ---------------
-* The orc cannot walk into the player.
-* The player cannot walk into the orc.
 * The orc moves generally towards the player.
 * The game announces the presence of the orc.
 
