@@ -16,10 +16,10 @@ Work In Progress
 
 Completed Stories
 -----------------
+* Orc attacks player and hits, but does not kill.
 
 Stories In Progress
 -------------------
-* Orc attacks player and hits, but does not kill.
 
 Pending Stories
 ---------------

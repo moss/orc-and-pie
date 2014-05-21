@@ -78,15 +78,18 @@ getCommand inputCharacter = Map.findWithDefault doNothing inputCharacter keymap
 -- >>> let orcByThePlayer = newGame { gsOrc=(40,10), gsPlayer=(41,11) }
 -- >>> gsOrc $ moveDownRight orcByThePlayer
 -- (40,10)
+-- >>> gsMessage $ moveDownRight orcByThePlayer
+-- OrcHits
 moveOrc :: Position -> GameMove
-moveOrc = moveCharacter gsOrc setOrc
+moveOrc = moveCharacter gsOrc setOrc attackPlayer
 
-movePlayer = moveCharacter gsPlayer setPlayer
+movePlayer = moveCharacter gsPlayer setPlayer doNothing
 
-moveCharacter :: PositionGetter -> PositionSetter -> Position -> GameMove
-moveCharacter positionGetter positionSetter offset gameState =
-    let newPosition = offsetBy offset (positionGetter gameState) in
-      if walkableTerrain newPosition (gsMap gameState)
-        && unoccupied newPosition gameState
-      then positionSetter gameState newPosition
-      else gameState
+moveCharacter :: PositionGetter -> PositionSetter -> GameMove -> Position -> GameMove
+moveCharacter positionGetter positionSetter occupiedMove offset gameState =
+    case offsetBy offset (positionGetter gameState) of
+      newPosition | occupied newPosition gameState -> occupiedMove gameState
+                  | walkableTerrain newPosition (gsMap gameState) -> positionSetter newPosition gameState
+      _ -> gameState
+
+attackPlayer gameState = gameState { gsMessage=OrcHits }
