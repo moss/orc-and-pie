@@ -9,7 +9,7 @@ data GameState = GameState { gsMap :: GameMap
                            , gsOrc :: Position
                            , gsMessage :: String
                            }
-               | QuitGame
+               | QuitGame deriving (Show)
 type PositionGetter = GameState -> Position
 type PositionSetter = GameState -> Position -> GameState
 

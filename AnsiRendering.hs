@@ -14,6 +14,8 @@ initScreen = do
 
 restoreSettings = do
     showCursor
+    hSetEcho stdin True
+    putStrLn ""
 
 render gameState = do
     setCursorPosition 0 0

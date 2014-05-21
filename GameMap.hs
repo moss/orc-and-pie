@@ -6,7 +6,7 @@ import Roguelike
 
 type GameMap = Map.Map Position Terrain
 data Terrain = NoTerrain | Floor | Wall
-             deriving (Eq)
+             deriving (Eq, Show)
 
 mapWithRoom :: Position -> Position -> GameMap
 mapWithRoom (left,top) (right,bottom) = Map.fromList $
