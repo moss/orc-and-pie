@@ -13,21 +13,15 @@ type GameMove = GameState -> GameState
 
 gameMoves :: RandomGen a => [Char] -> a -> [GameMove]
 gameMoves input orcBrain = let playerMoves = map advancePlayer input
-                               orcMoves = genOrcMoves orcBrain
+                               orcMoves = map advanceOrc $ randomRs (0,20) orcBrain
                                in (concat.transpose) [playerMoves, orcMoves]
 
-genOrcMoves :: RandomGen a => a -> [GameMove]
-genOrcMoves = randomChoices $ Vector.fromList [ moveOrc up
-                                              , moveOrc down
-                                              , moveOrc left
-                                              , moveOrc right
-                                              , advanceOrcTowardsPlayer
-                                              , advanceOrcTowardsPlayer
-                                              ]
-
-randomChoices :: RandomGen a => Vector.Vector b -> a -> [b]
-randomChoices options gen = map (Vector.unsafeIndex options) (randomRs (0,lastIndex) gen)
-                            where lastIndex = (Vector.length options) - 1
+advanceOrc :: Int -> GameMove
+advanceOrc d20 | d20 <= 3 = moveOrc up
+               | d20 <= 6 = moveOrc down
+               | d20 <= 9 = moveOrc left
+               | d20 <= 12 = moveOrc right
+advanceOrc _ = advanceOrcTowardsPlayer
 
 advancePlayer inputCharacter = getCommand inputCharacter
 

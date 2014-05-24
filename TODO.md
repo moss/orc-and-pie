@@ -23,11 +23,10 @@ Stories In Progress
 
 Pending Stories
 ---------------
-* Orc attacks and kills player, ending the game.
-* Orc sometimes misses player.
 * Show player's HP at bottom of screen.
-* HP goes to zero when killed.
-* HP goes down by one when hit, and player dies when it goes to zero.
+* HP goes down by one when hit.
+* Player dies and game ends when HP goes to zero.
+* Orc sometimes misses player.
 * HP goes down by a slightly random amount when hit.
 * Every once in a while, the orc scores a critical hit.
 
