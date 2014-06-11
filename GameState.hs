@@ -5,18 +5,21 @@ import Roguelike
 import TerrainView
 
 data GameState = GameState { gsMap :: GameMap
-                           , gsPlayer :: Position
-                           , gsOrc :: Position
+                           , gsPlayer :: Character
+                           , gsOrc :: Character
                            , gsMessage :: GameMessage
                            }
                | QuitGame deriving (Show)
 data GameMessage = NoMessage | SeeOrc | OrcHits deriving (Eq, Show)
-type PositionGetter = GameState -> Position
-type PositionSetter = Position -> GameState -> GameState
+data Character = Character { cHitPoints :: Int
+                           , cPosition :: Position
+                           } deriving (Show, Eq)
+type CharacterGetter = GameState -> Character
+type CharacterSetter = Character -> GameState -> GameState
 
 newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
-                    , gsPlayer = (42, 9)
-                    , gsOrc = (37, 14)
+                    , gsPlayer = Character 100 (42, 9)
+                    , gsOrc = Character 100 (37, 14)
                     , gsMessage = SeeOrc
                     }
 
@@ -26,8 +29,8 @@ instance Roguelike GameState where
     viewMessage gameState | gsMessage gameState == NoMessage = ""
                           | gsMessage gameState == SeeOrc = "You see a horrible orc!"
                           | gsMessage gameState == OrcHits = "The orc stabs you with a dagger!"
-    viewTile position gameState | gsPlayer gameState == position = '@'
-    viewTile position gameState | gsOrc gameState == position = 'o'
+    viewTile position gameState | cPosition (gsPlayer gameState) == position = '@'
+    viewTile position gameState | cPosition (gsOrc gameState) == position = 'o'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap
     viewTiles gameState = [(x, y, viewTile (x,y) gameState) | (x,y) <- positionsOnMap $ gsMap gameState]
 
@@ -35,6 +38,10 @@ setPlayer player gameState = gameState { gsPlayer = player, gsMessage = NoMessag
 setOrc orc gameState = gameState { gsOrc = orc, gsMessage = NoMessage }
 
 walkableTerrain position gameMap = terrainAt position gameMap == Floor
+
+occupied :: Position -> GameState -> Bool
 occupied position gameState = not $ unoccupied position gameState
-unoccupied position gameState = (gsOrc gameState) /= position
-                              && (gsPlayer gameState) /= position
+
+unoccupied :: Position -> GameState -> Bool
+unoccupied position gameState = (cPosition $ gsOrc gameState) /= position
+                              && (cPosition $ gsPlayer gameState) /= position

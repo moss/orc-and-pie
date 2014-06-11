@@ -20,10 +20,10 @@ Completed Stories
 
 Stories In Progress
 -------------------
+* Show player's HP at bottom of screen.
 
 Pending Stories
 ---------------
-* Show player's HP at bottom of screen.
 * HP goes down by one when hit.
 * Player dies and game ends when HP goes to zero.
 * Orc sometimes misses player.

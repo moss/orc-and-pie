@@ -28,13 +28,14 @@ advancePlayer inputCharacter = getCommand inputCharacter
 advanceOrcTowardsPlayer gameState = moveOrc (orcToPlayerDir gameState) gameState
 
 -- | Find the direction from the orc to the player
--- >>> orcToPlayerDir newGame { gsOrc=(1,1), gsPlayer=(10,10) }
+-- >>> orcToPlayerDir newGame { gsOrc=Character 100 (1,1), gsPlayer=Character 100 (10,10) }
 -- (1,1)
--- >>> orcToPlayerDir newGame { gsOrc=(10,10), gsPlayer=(1,1) }
+-- >>> orcToPlayerDir newGame { gsOrc=Character 100 (10,10), gsPlayer=Character 100 (1,1) }
 -- (-1,-1)
--- >>> orcToPlayerDir newGame { gsOrc=(10,10), gsPlayer=(10,1) }
+-- >>> orcToPlayerDir newGame { gsOrc=Character 100 (10,10), gsPlayer=Character 100 (10,1) }
 -- (0,-1)
-orcToPlayerDir GameState { gsOrc=(orcx,orcy), gsPlayer=(playerx,playery) } =
+orcToPlayerDir GameState { gsOrc=(Character _ (orcx,orcy))
+                         , gsPlayer=(Character _ (playerx,playery)) } =
     (dampen (playerx-orcx), dampen (playery-orcy))
 
 dampen num | num < 0 = -1
@@ -58,19 +59,19 @@ getCommand inputCharacter = Map.findWithDefault doNothing inputCharacter keymap
 
 -- | Move the orc by an offset
 -- Moves the orc if the target position is free.
--- >>> let orcInTheMiddle = newGame { gsOrc=(40,10) }
+-- >>> let orcInTheMiddle = newGame { gsOrc=Character 100 (40,10) }
 -- >>> let moveDownRight = moveOrc (1,1)
 -- >>> gsOrc $ moveDownRight orcInTheMiddle
--- (41,11)
+-- Character {cHitPoints = 100, cPosition = (41,11)}
 --
 -- The orc can't walk into walls.
--- >>> let orcByTheWall = newGame { gsOrc=(10,10), gsMap=mapWithRoom (1,1) (10,10) }
--- >>> gsOrc $ moveDownRight orcByTheWall
+-- >>> let orcByTheWall = newGame { gsOrc=Character 100 (10,10), gsMap=mapWithRoom (1,1) (10,10) }
+-- >>> cPosition $ gsOrc $ moveDownRight orcByTheWall
 -- (10,10)
 --
 -- If the orc walks into the player, it attacks instead of moving.
--- >>> let orcByThePlayer = newGame { gsOrc=(40,10), gsPlayer=(41,11) }
--- >>> gsOrc $ moveDownRight orcByThePlayer
+-- >>> let orcByThePlayer = newGame { gsOrc=Character 100 (40,10), gsPlayer=Character 100 (41,11) }
+-- >>> cPosition $ gsOrc $ moveDownRight orcByThePlayer
 -- (40,10)
 -- >>> gsMessage $ moveDownRight orcByThePlayer
 -- OrcHits
@@ -79,11 +80,12 @@ moveOrc = moveCharacter gsOrc setOrc attackPlayer
 
 movePlayer = moveCharacter gsPlayer setPlayer doNothing
 
-moveCharacter :: PositionGetter -> PositionSetter -> GameMove -> Position -> GameMove
-moveCharacter positionGetter positionSetter occupiedMove offset gameState =
-    case offsetBy offset (positionGetter gameState) of
+moveCharacter :: CharacterGetter -> CharacterSetter -> GameMove -> Position -> GameMove
+moveCharacter characterGetter characterSetter occupiedMove offset gameState =
+    let character = characterGetter gameState in
+    case offsetBy offset (cPosition character) of
       newPosition | occupied newPosition gameState -> occupiedMove gameState
-                  | walkableTerrain newPosition (gsMap gameState) -> positionSetter newPosition gameState
+                  | walkableTerrain newPosition (gsMap gameState) -> characterSetter (character { cPosition = newPosition }) gameState
       _ -> gameState
 
 attackPlayer gameState = gameState { gsMessage=OrcHits }
