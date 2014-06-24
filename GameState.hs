@@ -29,6 +29,7 @@ instance Roguelike GameState where
     viewMessage gameState | gsMessage gameState == NoMessage = ""
                           | gsMessage gameState == SeeOrc = "You see a horrible orc!"
                           | gsMessage gameState == OrcHits = "The orc stabs you with a dagger!"
+    viewStatus gameState = "HP: " ++ (show $ cHitPoints $ gsPlayer gameState)
     viewTile position gameState | cPosition (gsPlayer gameState) == position = '@'
     viewTile position gameState | cPosition (gsOrc gameState) == position = 'o'
     viewTile position GameState { gsMap = gameMap } = viewTerrain position gameMap

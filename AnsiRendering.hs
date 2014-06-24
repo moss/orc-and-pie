@@ -1,4 +1,6 @@
-module AnsiRendering where
+module AnsiRendering
+( initScreen, render, restoreSettings )
+where
 
 import System.Console.ANSI
 import System.IO
@@ -23,6 +25,7 @@ render gameState = do
     putStr $ viewMessage gameState
     mapM_ drawTile $ viewTiles gameState
     setCursorPosition 25 0
+    putStr $ viewStatus gameState 
 
 drawTile (x,y,char) = do
     setCursorPosition y x
