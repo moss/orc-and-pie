@@ -34,15 +34,19 @@ newGame = GameState { gsMap = mapWithRoom (35,7) (44,16)
 instance Roguelike GameState where
     isOver QuitGame = True
     isOver gameState = False
+
     viewMessage GameState { gsMessage=m }
                   | m == NoMessage = ""
                   | m == SeeOrc = "You see a horrible orc!"
                   | m == OrcHits = "The orc stabs you with a dagger!"
+
     viewStatus gameState = "HP: " ++ (show $ cHitPoints $ gsPlayer gameState)
+
     viewTile position gameState
            | position == playerPosition gameState = '@'
            | position == orcPosition gameState = 'o'
            | True = viewTerrain position $ gsMap gameState
+
     viewTiles gameState = [(x, y, viewTile (x,y) gameState) | (x,y) <- positionsOnMap $ gsMap gameState]
 
 setPlayer player gameState = gameState { gsPlayer = player, gsMessage = NoMessage }
